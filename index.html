@@ -1,1 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Encryption, Decryption & MD5 Tool</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <style>
+        body {
+
+            font-family: Arial, sans-serif;
+
+            padding: 20px;
+
+            text-align: center;
+
+            background-color: #f4f6f8;
+
+        }
+
+        h3 {
+
+            color: #2c3e50;
+
+            margin-top: 25px;
+
+        }
+
+        input {
+
+            padding: 10px;
+
+            margin: 8px;
+
+            width: 260px;
+
+            border-radius: 5px;
+
+            border: 1px solid #bbb;
+
+            font-size: 14px;
+
+        }
+
+
+
+        input:focus {
+
+            border-color: #007bff;
+
+            outline: none;
+
+        }
+
+        button {
+
+            padding: 10px 18px;
+
+            margin: 8px;
+
+            border-radius: 5px;
+
+            border: none;
+
+            background-color: #007bff;
+
+            color: white;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+        }
+
+        button:hover {
+
+            background-color: #0056b3;
+
+        }
+
+        p {
+
+            font-weight: bold;
+
+            margin-top: 10px;
+
+            color: #333;
+
+        }
+    </style>
+</head>
+
+<body>
+    <H1>Network Security </H1>
+    <hr>
+    <h3>Encryption and Decryption </h3>
+
+    <input type="text" id="encryptInput" placeholder="Enter text to encrypt">
+
+    <button onclick="encryptText()">Encrypt</button>
+
+    <br>
+
+    <input type="text" id="decryptInput" placeholder="Paste encrypted text">
+
+    <button onclick="decryptText()">Decrypt</button>
+
+    <p id="encResult"></p>
+
+    <hr style="border: 1px solid #ccc; max-width: 50%;">
+
+    <h3>MD5 Hash Generator & Compare</h3>
+
+    <input type="text" id="md5Input" placeholder="Enter text">
+
+    <button onclick="generateMD5()">Generate MD5</button>
+
+    <p id="md5Result"></p>
+
+
+    <input type="text" id="compareInput" placeholder="Enter text to compare">
+
+    <button onclick="compareMD5()">Compare MD5</button>
+
+    <p id="compareHash"></p>
+    <p id="compareResult"></p>
+
+
+    <script>
+
+        function encryptText() {
+
+            let text = document.getElementById("encryptInput").value;
+
+            let encrypted = btoa(text);
+
+            document.getElementById("encResult").innerHTML =
+                "Encrypted : " + encrypted;
+
+        }
+
+        function decryptText() {
+
+            let encryptedText = document.getElementById("decryptInput").value;
+
+            try {
+
+                let decrypted = atob(encryptedText);
+
+                if (btoa(decrypted) === encryptedText) {
+
+                    document.getElementById("encResult").innerHTML =
+                        "Decrypted : " + decrypted;
+                }
+                else {
+
+                    document.getElementById("encResult").innerHTML =
+                        " Invalid Encrypted Text";
+                }
+
+            }
+            catch (error) {
+
+                document.getElementById("encResult").innerHTML =
+                    " Invalid Encrypted Text";
+
+            }
+
+        }
+
+        //Hash Functionality
+
+        let generatedHash = "";
+
+        function generateMD5() {
+
+            let text = document.getElementById("md5Input").value;
+
+            generatedHash = CryptoJS.MD5(text).toString();
+
+            document.getElementById("md5Result").innerHTML =
+                "Generated MD5 : " + generatedHash;
+
+        }
+
+        function compareMD5() {
+
+            let compareText = document.getElementById("compareInput").value;
+
+            let compareHash = CryptoJS.MD5(compareText).toString();
+            document.getElementById("compareHash").innerHTML =
+                "Compare Hash : " + compareHash;
+
+            if (compareHash === generatedHash) {
+                document.getElementById("compareResult").innerHTML +=
+                    " - Hash Match <br>";
+            }
+            else {
+                document.getElementById("compareResult").innerHTML +=
+                    " - Hash Not Match <br>";
+            }
+
+        }
+    </script>
+</body>
+
+</html>
